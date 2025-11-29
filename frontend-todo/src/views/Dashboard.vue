@@ -179,9 +179,9 @@ import { useCategories } from '../composables/useCategories'
 import { useToast } from '../composables/useToast'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
 import TodoItem from '../components/TodoItem.vue'
-import TodoFormModal from '../components/TodoFormModal.vue'
-import CategoryModal from '../components/CategoryModal.vue'
-import ConfirmModal from '../components/ConfirmModal.vue'
+import TodoFormModal from '../components/modals/TodoFormModal.vue'
+import CategoryModal from '../components/modals/CategoryModal.vue'
+import ConfirmModal from '../components/modals/ConfirmModal.vue'
 
 const { user, logout } = useAuth()
 const { todos, loading: todosLoading, fetchTodos, toggleTodo, deleteTodo } = useTodos()

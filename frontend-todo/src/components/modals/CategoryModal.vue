@@ -111,8 +111,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useCategories } from '../composables/useCategories'
-import { useToast } from '../composables/useToast'
+import { useCategories } from '../../composables/useCategories'
+import { useToast } from '../../composables/useToast'
 import ConfirmModal from './ConfirmModal.vue'
 
 const props = defineProps({

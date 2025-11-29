@@ -102,7 +102,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useTodos } from '../composables/useTodos'
+import { useTodos } from '../../composables/useTodos'
 
 const props = defineProps({
   todo: {
