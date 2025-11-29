@@ -158,6 +158,16 @@
       @close="showCategoryModal = false"
       @refresh="handleCategoryRefresh"
     />
+
+    <!-- Delete Confirmation Modal -->
+    <ConfirmModal
+      :show="showDeleteConfirm"
+      title="Delete Todo?"
+      message="Are you sure you want to delete this todo? This action cannot be undone."
+      confirm-text="Delete"
+      @confirm="confirmDelete"
+      @cancel="cancelDelete"
+    />
   </div>
 </template>
 
@@ -171,6 +181,7 @@ import LoadingSpinner from '../components/LoadingSpinner.vue'
 import TodoItem from '../components/TodoItem.vue'
 import TodoFormModal from '../components/TodoFormModal.vue'
 import CategoryModal from '../components/CategoryModal.vue'
+import ConfirmModal from '../components/ConfirmModal.vue'
 
 const { user, logout } = useAuth()
 const { todos, loading: todosLoading, fetchTodos, toggleTodo, deleteTodo } = useTodos()
@@ -180,7 +191,9 @@ const { showToast } = useToast()
 const showAddModal = ref(false)
 const showEditModal = ref(false)
 const showCategoryModal = ref(false)
+const showDeleteConfirm = ref(false)
 const editingTodo = ref(null)
+const todoToDelete = ref(null)
 
 const filters = ref({
   search: '',
@@ -221,15 +234,25 @@ const handleEdit = (todo) => {
   showEditModal.value = true
 }
 
-const handleDelete = async (id) => {
-  if (!confirm('Are you sure you want to delete this todo?')) return
-  
+const handleDelete = (id) => {
+  todoToDelete.value = id
+  showDeleteConfirm.value = true
+}
+
+const confirmDelete = async () => {
   try {
-    await deleteTodo(id)
+    await deleteTodo(todoToDelete.value)
     showToast('Todo deleted successfully', 'success')
+    showDeleteConfirm.value = false
+    todoToDelete.value = null
   } catch (err) {
     showToast('Failed to delete todo', 'error')
   }
+}
+
+const cancelDelete = () => {
+  showDeleteConfirm.value = false
+  todoToDelete.value = null
 }
 
 const handleSave = () => {
